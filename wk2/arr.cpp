@@ -62,6 +62,9 @@ int main() {
 
          names[index++] = input;
         
+         if(input == "Strawberry"){
+            cout << "I hope you die you lying prick.\n";
+         }
     }
 
     for(int i = 0; i < 10; i++){
