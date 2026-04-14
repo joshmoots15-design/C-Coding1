@@ -1,5 +1,5 @@
 // Josh Moots Spr26 Coding 1 cpp Project.
-// for windows, it's 'cl /EHsc proj.cpp and type proj'
+// for windows, it's 'cl /EHsc pro.cpp and type pro'
 
 // create a .cpp program that will allow the user to 
 // add, edit, remove, and show all games (sorted), and then quit
