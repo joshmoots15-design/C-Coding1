@@ -14,8 +14,6 @@
         // display commands again
         // "add" adds games to the list
         // "remove" gets rid a game from the list
-        // "random" mixes up the list
-        // "sort" orders the list alphbetically
         // "rate" randomly picks a game from the list and 
         // then will ask you to rate it out of ten.
         // "quit" leaves the game
@@ -31,10 +29,11 @@ using namespace std;
 int main() {
         cout << "Im ready to do stuff and things!\n";
 
+        int numberRate = -1;
     // Start of the 'game'
     do{
         cout << "Here are your options:\n";
-        cout << "'add', 'remove', 'random', 'sort', 'rate', or 'quit'.\n";
+        cout << "'add', 'remove', 'rate', or 'quit'.\n";
 
         string input;
 
@@ -90,49 +89,47 @@ int main() {
             // make iter point at the first element in the vector
             iter = favs.begin(); 
 
-            // the asterisk is a "dereference operator"... so that we can get 
-                // the value that the iter is pointing at.
-            cout << "iter is pointing at " << *iter << ".\n";
-
-            iter += 1;
-
-            cout << "Now iter is pointing at " << *iter << ".\n";
-
-            cout << "What name would you like to select?\n";
+            cout << "What game would you like to rate?\n";
 
             getline(cin, input);
             // use the find algorithm
             iter = find(favs.begin(), favs.end(), input);
             
             if(iter != favs.end()) {
-                cout << "We've found " << *iter << "!\n";
-                cout << "Would you like to change this fav?\n";
-                getline(cin, input);
+                cout << "We've found " << *iter << "! Now please rate the game.\n";
 
-                if (input == "yes") {
-                    cout << "What would you like to change this fav to?\n";
+                if (numberRate == -1) {
+                    cin >> numberRate;
+
+                    if(numberRate <= 10){
+                        cout << "You rated this game " << numberRate << " out of 10.\n";
+                    }
+
+                    else{
+                            "Please pick a number out of ten.\n";
+
+                            return 0;
+                    }
                     getline(cin, input);
 
                     *iter = input;      // changing the fav.
-                }
-
-                cout << "here are your updated favs!\n";
-                for(int i = 0; i < favs.size(); i++) {
-                    cout << "    " << favs[i] << "\n";
                 }
             }
             else {
                 cout << "We couldn't find that name.\n";
             }
+        } 
 
 
     // start of quit
-         else if(input == "quit"){
+         else if(input == "quit") {
             cout << "Thanks for playing.\n";
             break;
-        // end of quit
         }
-     } 
+
+        else{
+                cout << "I do not understand. Try Again.\n";
+        }
     } while(true);
 
     return 0;
