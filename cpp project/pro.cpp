@@ -68,24 +68,24 @@ int main() {
 
             showVec(listGames);
 
-            string names[10];
+            string names[5];
             string input;
             index = 0;
 
-            while(index < 10){
+            while(index < 5){
                 cout << "go ahead and start addin' bay-beeee!\n";
                 cin >> input;
 
-                for(int i = 0; i < 10; i++){  
-                    
-                    addStringToVec(listGames);
+                for(int i = 0; i < 5; i++){  
             
                         if(names[i] == ""){
                             continue;
                         }
                         cout << names[i] << ".\n";
-
-                        break;
+            
+                        addStringToVec(listGames);
+                        
+                            break;
                 }
 
             if (input == "done") {
@@ -147,6 +147,54 @@ int main() {
                 cout << "We couldn't find that name.\n";
             }
         } 
+
+        else if(input == "edit") {
+            
+            showVec(listGames);
+
+            vector<string>::iterator iter;
+
+            cout << "Here is the list of games!\n";
+            for(int i = 0; i < listGames.size(); i++) {
+                cout << "    " << listGames[i] << "\n";
+            }
+
+            iter = listGames.begin(); 
+
+            cout << "Let's look at this one: " << *iter << ".\n";
+
+            iter += 1;
+
+            cout << "Lets also look at this one: " << *iter << ".\n";
+
+            cout << "Which game would you like to select?\n";
+
+            getline(cin, input);
+            // use the find algorithm
+            iter = find(listGames.begin(), listGames.end(), input);
+            
+            if(iter != listGames.end()) {
+                cout << "We've found " << *iter << "!\n";
+                cout << "Would you like to change this game?\n";
+                getline(cin, input);
+
+                if (input == "yes") {
+                    cout << "What would you like to change this game to instead?\n";
+                    getline(cin, input);
+
+                    *iter = input;      
+                }
+
+                cout << "here is the updated list\n";
+                for(int i = 0; i < listGames.size(); i++) {
+                    cout << "    " << listGames[i] << "\n";
+                }
+            }
+            else {
+                cout << "We couldn't find that name.\n";
+            }
+
+        }
 
     // start of remove
         else if(input == "remove"){
