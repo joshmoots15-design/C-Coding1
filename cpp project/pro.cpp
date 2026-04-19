@@ -26,14 +26,35 @@
 
 using namespace std;
 
+void showVec(vector<string>& vec) {
+    for(int i = 0; i < vec.size(); i++) {
+        cout << vec[i] << endl;
+       }
+}
+
+void addStringToVec(vector<string>& vec){
+    cout << "You may now start adding games! Type 'done' when finished!\n";
+    string input;
+    getline (cin, input);
+
+    vec.push_back(input);
+
+    showVec(vec);
+}
+
 int main() {
         cout << "Im ready to do stuff and things!\n";
+
+        vector<string> listGames = {"Hotline Miami", "Hollow Knight", "Silksong", 
+            "Nine Sol", "Overwatch", "Sol Cesto", "Peak"};
+
+            int i = 0;
 
         int numberRate = -1;
     // Start of the 'game'
     do{
         cout << "Here are your options:\n";
-        cout << "'add', 'remove', 'rate', or 'quit'.\n";
+        cout << "'add', 'display', 'remove', 'rate', or 'quit'.\n";
 
         string input;
 
@@ -43,7 +64,9 @@ int main() {
 
     //  Start of 'add'
         if(input == "add") {
-            cout << "You may now start adding games! Type 'done' when finished!\n";
+            cout << "Here is the current list of games!\n";
+
+            showVec(listGames);
 
             string names[10];
             string input;
@@ -53,49 +76,54 @@ int main() {
                 cout << "go ahead and start addin' bay-beeee!\n";
                 cin >> input;
 
-                for(int i = 0; i < 10; i++){        
+                for(int i = 0; i < 10; i++){  
+                    
+                    addStringToVec(listGames);
+            
                         if(names[i] == ""){
                             continue;
                         }
+                        cout << names[i] << ".\n";
 
-                        cout << names[i] << "\n";
-                    }
+                        break;
+                }
 
-                if(input == "done"){
-                    cout << "you have finished adding names!\n";
+            if (input == "done") {
+                cout << "You have finished adding names!\n";
                 break;
-                } 
-
-                names[index++] = input;
+            }  
+                names[index++] = input; 
                 }
             }
         //end of add
+
+        // start of display
+        else if(input == "display"){
+            showVec(listGames);
+        }
 
     // start of rate
          else if(input == "rate") {
             cout << "Pick one to rate out of ten:.\n";
 
-            // using a collection initializer to add favs at creation of vector.
-            vector<string> favs = {"Hotline Miami", "Hollow Knight", "Silksong", "Nine Sol", "Overwatch", "Marvel Rivals", "Mario Party"};
+            sort(listGames.begin(), listGames.end());
 
-            // building an iterator. it points to a 'spot' in a vector.
             vector<string>::iterator iter;
 
-            cout << "here are your favs!\n";
-            for(int i = 0; i < favs.size(); i++) {
-                cout << "    " << favs[i] << "\n";
+            cout << "here is the game list!\n";
+            for(int i = 0; i < listGames.size(); i++) {
+                cout << "    " << listGames[i] << "\n";
             }
 
-            // make iter point at the first element in the vector
-            iter = favs.begin(); 
+            iter = listGames.begin(); 
 
             cout << "What game would you like to rate?\n";
 
             getline(cin, input);
-            // use the find algorithm
-            iter = find(favs.begin(), favs.end(), input);
+
+            iter = find(listGames.begin(), listGames.end(), input);
             
-            if(iter != favs.end()) {
+            if(iter != listGames.end()) {
                 cout << "We've found " << *iter << "! Now please rate the game.\n";
 
                 if (numberRate == -1) {
@@ -120,6 +148,27 @@ int main() {
             }
         } 
 
+    // start of remove
+        else if(input == "remove"){
+            sort(listGames.begin(), listGames.end());
+
+            cout << "Choose one to remove!\n";
+
+            for(int i = 0; i < listGames.size(); i++){
+                cout << listGames[i] << endl;
+            }
+
+            cout << "What game would you like to remove from the list?\n";
+            getline(cin, input);
+
+            auto iter = find(listGames.begin(), listGames.end(), input);
+
+            if(iter != listGames.end()) {
+                cout << "We have found the name, we getting rid of it!\n";
+                listGames.erase(iter);
+            }
+
+        }
 
     // start of quit
          else if(input == "quit") {
