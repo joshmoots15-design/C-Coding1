@@ -14,23 +14,71 @@ vector<string> names = {"grand", "evil", "majestic", "powerful", "sexy"};
 vector<string> elements = {"Soil", "Clay", "Stone", "Dust", "Ore"};
 
 class basicWurm{
+private:
+    // string name;
+    // string element;
+    // int health;
+    // int damage; 
+    // int typing;
+    // int energy;
+
 public:
     string name;
     string element;
     int health;
     int damage; 
+    int typing;
+    int energy;
 
-    basicWurm() {
-        cout << "hewwo! I'm a worm!.\n";
-        name = names[rand() % names.size()] + "worm";;
-        health = 7;
-        damage = 3;
-        element = elements[rand() % elements.size()] + " element";
+basicWurm(string giveName, int giveType, int giveEnergy){
+        name = giveName;
+        typing = giveType;
+        energy = giveEnergy;
     }
+
+    basicWurm(){
+        name = "basicWurm";
+        typing = 10;
+        energy = 10;
+    }
+    
+    while(energy > 0){
+    if(typing < 5){
+        cout << "Soil!\n"; 
+    }
+    else if(typing < 10){
+        cout << "Clay.\n";
+    }
+    else if(typing < 15){
+        cout << "Stone.\n";
+    }
+    else{
+        cout << "Dust.\n";
+    }
+    }
+        // if(typing < 5) cout << "Soil!\n";
+        // else if(typing < 10) cout << "Clay.\n";
+        // else if(typing < 15) cout << "Stone.\n";
+        // else cout << "Dust!\n";
+    };
+
+    // basicWurm() {
+    //     cout << "hewwo! I'm a worm!.\n";
+    //     name = names[rand() % names.size()] + "worm";;
+    //     health = 7;
+    //     damage = 3;
+    //     typing = 10
+    //     // element = elements[rand() % elements.size()] + " element";
+    //     status()
+    // }
 
     void speakElement() {
-        cout << "haii i am " << name << " and i am the " << element << " <3\n";
+        cout << "haii i am " << name << " and i am the " << typing << "element <3\n";
     }
+
+    //  void speakElement() {
+    //     cout << "haii i am " << name << " and i am the " << element << " <3\n";
+    // }
 
     bool attack(basicWurm& opponent){
         if(element == "Soil" && opponent.element == "Clay"){
@@ -76,7 +124,7 @@ class evilWyrm : public basicWurm{
     evilWyrm(){
         name = "boss";
     }
-    
+};
 };
 
 int main(){
