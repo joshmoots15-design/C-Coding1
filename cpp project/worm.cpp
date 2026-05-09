@@ -10,40 +10,54 @@
 
 using namespace std;
 
-vector<string> names = {"grand", "evil", "majestic", "powerful", "sexy"};
+// vector<string> names = {"grand", "evil", "majestic", "powerful", "sexy"};
 vector<string> elements = {"Soil", "Clay", "Stone", "Dust", "Ore"};
 
 class basicWurm{
-private:
+// private:
     // string name;
     // string element;
     // int health;
     // int damage; 
     // int typing;
-    // int energy;
+    int energy;
 
 public:
-    string name;
+    // string name;
     string element;
+    int name;
     int health;
     int damage; 
     int typing;
-    int energy;
+    // int energy;
 
-basicWurm(string giveName, int giveType, int giveEnergy){
+basicWurm(int giveName, int giveType, int giveEnergy){
         name = giveName;
         typing = giveType;
         energy = giveEnergy;
+        status();
     }
 
-    basicWurm(){
-        name = "basicWurm";
+basicWurm() {
+        cout << "hewwo! I'm a worm!.\n";
+        name = 5;
+        health = 7;
+        damage = 3;
         typing = 10;
         energy = 10;
+        // element = elements[rand() % elements.size()] + " element";
+        status();
     }
+
+    // basicWurm(){
+    //     name = "basicWurm";
+    //     typing = 10;
+    //     energy = 10;
+    // }
     
-    while(energy > 0){
-    if(typing < 5){
+    // while(energy > 0){
+    void status(){
+        if(typing < 5){
         cout << "Soil!\n"; 
     }
     else if(typing < 10){
@@ -56,21 +70,12 @@ basicWurm(string giveName, int giveType, int giveEnergy){
         cout << "Dust.\n";
     }
     }
+    
+    };
         // if(typing < 5) cout << "Soil!\n";
         // else if(typing < 10) cout << "Clay.\n";
         // else if(typing < 15) cout << "Stone.\n";
         // else cout << "Dust!\n";
-    };
-
-    // basicWurm() {
-    //     cout << "hewwo! I'm a worm!.\n";
-    //     name = names[rand() % names.size()] + "worm";;
-    //     health = 7;
-    //     damage = 3;
-    //     typing = 10
-    //     // element = elements[rand() % elements.size()] + " element";
-    //     status()
-    // }
 
     void speakElement() {
         cout << "haii i am " << name << " and i am the " << typing << "element <3\n";
@@ -80,27 +85,27 @@ basicWurm(string giveName, int giveType, int giveEnergy){
     //     cout << "haii i am " << name << " and i am the " << element << " <3\n";
     // }
 
-    bool attack(basicWurm& opponent){
-        if(element == "Soil" && opponent.element == "Clay"){
+     bool attack(basicWurm& opponent){
+        if(typing == "Soil" && opponent.typing == "Clay"){
         // double damage
         opponent.health -= damage * 2;
     }
-    else if (element == "Clay" && opponent.element == "Dust"){
-        // double damage
-        opponent.health -= damage * 2;
-    }
-
-    else if (element == "Dust" && opponent.element == "Stone"){
+    else if (typing == "Clay" && opponent.typing == "Dust"){
         // double damage
         opponent.health -= damage * 2;
     }
 
-    else if (element == "Stone" && opponent.element == "Ore"){
+    else if (typing == "Dust" && opponent.typing == "Stone"){
         // double damage
         opponent.health -= damage * 2;
     }
 
-    else if (element == "Ore" && opponent.element == "Soil"){
+    else if (typing == "Stone" && opponent.typing == "Ore"){
+        // double damage
+        opponent.health -= damage * 2;
+    }
+
+    else if (typing == "Ore" && opponent.typing == "Soil"){
         // double damage
         opponent.health -= damage * 2;
     }
@@ -108,6 +113,35 @@ basicWurm(string giveName, int giveType, int giveEnergy){
     else{
         opponent.health -= damage;
     }
+
+    // bool attack(basicWurm& opponent){
+    //     if(element == "Soil" && opponent.element == "Clay"){
+    //     // double damage
+    //     opponent.health -= damage * 2;
+    // }
+    // else if (element == "Clay" && opponent.element == "Dust"){
+    //     // double damage
+    //     opponent.health -= damage * 2;
+    // }
+
+    // else if (element == "Dust" && opponent.element == "Stone"){
+    //     // double damage
+    //     opponent.health -= damage * 2;
+    // }
+
+    // else if (element == "Stone" && opponent.element == "Ore"){
+    //     // double damage
+    //     opponent.health -= damage * 2;
+    // }
+
+    // else if (element == "Ore" && opponent.element == "Soil"){
+    //     // double damage
+    //     opponent.health -= damage * 2;
+    // }
+
+    // else{
+    //     opponent.health -= damage;
+    // }
 
     cout << "i am doing " << damage << " multipied!\n";    
     cout << opponent.name << " now has " << opponent.health << " health remaining!\n";
