@@ -1,5 +1,6 @@
 // Josh Moots Spr26
 // worms!
+using namespace std;
 
 #include <iostream>
 #include <string>           // for getline()
@@ -8,104 +9,92 @@
 #include <cstdlib>
 #include <algorithm>
 
-using namespace std;
-
 // vector<string> names = {"grand", "evil", "majestic", "powerful", "sexy"};
-vector<string> elements = {"Soil", "Clay", "Stone", "Dust", "Ore"};
+// vector<string> elements = {"Soil", "Clay", "Stone", "Dust", "Ore"};
 
 class basicWurm{
-// private:
-    // string name;
-    // string element;
-    // int health;
-    // int damage; 
-    // int typing;
-    int energy;
 
 public:
-    // string name;
-    string element;
-    int name;
+
+    enum Type {
+            SOIL,
+            CLAY,
+            STONE,
+            DUST
+    };
+
+    string name = "";
+    // int name;
     int health;
     int damage; 
-    int typing;
-    // int energy;
+    Type typing;
+    int energy;
 
-basicWurm(int giveName, int giveType, int giveEnergy){
-        name = giveName;
-        typing = giveType;
-        energy = giveEnergy;
-        status();
-    }
+// basicWurm(int giveName, int giveType, int giveEnergy){
+//         name = giveName;
+//         typing = giveType;
+//         energy = giveEnergy;
+//         status();
+//     }
 
 basicWurm() {
         cout << "hewwo! I'm a worm!.\n";
-        name = 5;
+        name = "grandwurm";
         health = 7;
         damage = 3;
-        typing = 10;
+        typing = SOIL;
         energy = 10;
         // element = elements[rand() % elements.size()] + " element";
-        status();
+        cout << status();
     }
 
-    // basicWurm(){
-    //     name = "basicWurm";
-    //     typing = 10;
-    //     energy = 10;
-    // }
-    
-    // while(energy > 0){
-    void status(){
-        if(typing < 5){
-        cout << "Soil!\n"; 
+basicWurm (string giveName, Type giveType, int giveEnergy) {
+    name = giveName;
+    typing = giveType;
+    energy = giveEnergy;
+    health = 0;
+    damage = 0;
+    cout << status();
+}
+
+    string status(){
+    if(typing == SOIL){
+        return "Soil"; 
     }
-    else if(typing < 10){
-        cout << "Clay.\n";
+    else if(typing == CLAY){
+        return "Clay";
     }
-    else if(typing < 15){
-        cout << "Stone.\n";
+    else if(typing == STONE){
+        return "Stone";
+    }
+    else if(typing == DUST){
+        return "Dust";
     }
     else{
-        cout << "Dust.\n";
+        return "No Typing";
     }
     }
     
-    };
-        // if(typing < 5) cout << "Soil!\n";
-        // else if(typing < 10) cout << "Clay.\n";
-        // else if(typing < 15) cout << "Stone.\n";
-        // else cout << "Dust!\n";
-
-    void speakElement() {
-        cout << "haii i am " << name << " and i am the " << typing << "element <3\n";
+      void speakElement() {
+        cout << "haii i am " << name << " and i am the " << status() << " element <3\n";
     }
 
-    //  void speakElement() {
-    //     cout << "haii i am " << name << " and i am the " << element << " <3\n";
-    // }
-
-     bool attack(basicWurm& opponent){
-        if(typing == "Soil" && opponent.typing == "Clay"){
+    void attack(basicWurm& opponent){
+        if(typing == SOIL && opponent.typing == CLAY){
         // double damage
         opponent.health -= damage * 2;
     }
-    else if (typing == "Clay" && opponent.typing == "Dust"){
+    else if (typing == CLAY && opponent.typing == DUST){
         // double damage
         opponent.health -= damage * 2;
     }
 
-    else if (typing == "Dust" && opponent.typing == "Stone"){
+    else if (typing == DUST && opponent.typing == STONE){
         // double damage
         opponent.health -= damage * 2;
     }
 
-    else if (typing == "Stone" && opponent.typing == "Ore"){
-        // double damage
-        opponent.health -= damage * 2;
-    }
-
-    else if (typing == "Ore" && opponent.typing == "Soil"){
+    else if (typing == STONE && opponent.typing == SOIL){
         // double damage
         opponent.health -= damage * 2;
     }
@@ -114,52 +103,13 @@ basicWurm() {
         opponent.health -= damage;
     }
 
-    // bool attack(basicWurm& opponent){
-    //     if(element == "Soil" && opponent.element == "Clay"){
-    //     // double damage
-    //     opponent.health -= damage * 2;
-    // }
-    // else if (element == "Clay" && opponent.element == "Dust"){
-    //     // double damage
-    //     opponent.health -= damage * 2;
-    // }
-
-    // else if (element == "Dust" && opponent.element == "Stone"){
-    //     // double damage
-    //     opponent.health -= damage * 2;
-    // }
-
-    // else if (element == "Stone" && opponent.element == "Ore"){
-    //     // double damage
-    //     opponent.health -= damage * 2;
-    // }
-
-    // else if (element == "Ore" && opponent.element == "Soil"){
-    //     // double damage
-    //     opponent.health -= damage * 2;
-    // }
-
-    // else{
-    //     opponent.health -= damage;
-    // }
-
     cout << "i am doing " << damage << " multipied!\n";    
     cout << opponent.name << " now has " << opponent.health << " health remaining!\n";
 
-        if(opponent.health <= 0) return true;
-        else                     return false;
+        // if(opponent.health <= 0) return true;
+        // else                     return false;
     }
-
-};
-
-class evilWyrm : public basicWurm{
-    public:
-    
-    evilWyrm(){
-        name = "boss";
-    }
-};
-};
+    };
 
 int main(){
     srand(time(0));
@@ -169,12 +119,12 @@ int main(){
     // wormys gaining their dirt element and introducing themselves
     basicWurm grandwurm;
     grandwurm.name = "Grand Wurm";
-    // grandwurm.speakElement("Soil"); 
+    grandwurm.typing = basicWurm::Type::SOIL;
     grandwurm.speakElement();
 
-    evilWyrm rampage;
+    basicWurm rampage;
     rampage.name = "Drakon King";
-    // rampage.speakElement("Clay");
+    rampage.typing = basicWurm::Type::CLAY;
     rampage.speakElement();
 
     // Start of Attack
