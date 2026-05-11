@@ -75,8 +75,18 @@ basicWurm (string giveName, Type giveType, int giveEnergy) {
     }
     }
     
-      void speakElement() {
+    void speakElement() {
         cout << "haii i am " << name << " and i am the " << status() << " element <3\n";
+    }
+
+    void speakStats(){
+        cout << "I am " << name << " and i have " << health << " health remaining, and I do ";
+        cout <<  damage << " "  << status() << " damage.";
+    }
+
+    void eatLemon(){
+        cout << "my damage is raised by 1!\n";
+        basicWurm.damage ++ 1;
     }
 
     void attack(basicWurm& opponent){
@@ -127,28 +137,38 @@ int main(){
     rampage.typing = basicWurm::Type::CLAY;
     rampage.speakElement();
 
-    // Start of Attack
-    cout << "The Grand Wurm readies its spell\n";
-    grandwurm.attack(rampage);
-
-    cout << "The Drakon King unleashes a breath attack!\n";
-    rampage.attack(grandwurm);
-
     getline(cin, input);
+    // Start of Attack
 
-    // Start of Defend
-    // Start of Train
+    if(input == "battle"){
+        cout << "The Grand Wurm readies its spell\n";
+        grandwurm.attack(rampage);
+
+        cout << "The Drakon King unleashes a breath attack!\n";
+        rampage.attack(grandwurm);
+        }
+    
+
     // Start of Feed
-
     if (input == "feed") {
-        cout << "yummy :D\n";
+        cout << "what would you like to feed your worm?\n";
+
+        if (input == "Lemon"){
+            cout << "oouu sour!\n";
+
+            grandwurm.eatLemon();
+        }
     }
 
+    // Start of Train
     if (input == "train") {
         cout << "I am so ready :D\n";
     }
 
-    // Start of Elemental Swap 
+    // Start of Stats
+    if (input == "stats"){
+       grandwurm.speakStats();
+    } 
 
     return 0;
 }
