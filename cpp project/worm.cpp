@@ -8,6 +8,7 @@ using namespace std;
 #include <ctime> 
 #include <cstdlib>
 #include <algorithm>
+#include <fstream>
 
 // vector<string> names = {"grand", "evil", "majestic", "powerful", "sexy"};
 // vector<string> elements = {"Soil", "Clay", "Stone", "Dust", "Ore"};
@@ -29,6 +30,11 @@ public:
     int damage; 
     Type typing;
     int energy;
+    int power = rand();
+    int minPower = -3;
+    int maxPower = 3;
+    int range = minPower - maxPower;
+    int powerRange = (power % range) - maxPower;
 
 // basicWurm(int giveName, int giveType, int giveEnergy){
 //         name = giveName;
@@ -54,7 +60,7 @@ basicWurm (string giveName, Type giveType, int giveEnergy) {
     energy = giveEnergy;
     health = 0;
     damage = 0;
-    cout << status();
+    status();
 }
 
     string status(){
@@ -74,20 +80,55 @@ basicWurm (string giveName, Type giveType, int giveEnergy) {
         return "No Typing";
     }
     }
-    
+
     void speakElement() {
         cout << "haii i am " << name << " and i am the " << status() << " element <3\n";
     }
 
     void speakStats(){
         cout << "I am " << name << " and i have " << health << " health remaining, and I do ";
-        cout <<  damage << " "  << status() << " damage.";
+        cout <<  damage << " "  << status() << " damage.\n";
     }
 
     void eatLemon(){
-        cout << "my damage is raised by 1!\n";
-        basicWurm.damage ++ 1;
+        cout << "my damage is raised by x1.5!\n";
+        basicWurm::damage += damage * 1.5;
     }
+
+    void eatCherry(){
+        cout << "my health is raised by x1.5!\n";
+        basicWurm::health += health * 1.5;
+    }
+
+    void doSquiggle(){
+        cout << "I am squiggling!\n";
+        basicWurm::damage += damage + powerRange;
+        cout << "I squiggled " << powerRange << " amount!\n";
+
+    }
+
+    void doSquirm(){
+        cout << "I am squirming!\n";
+        basicWurm::health += health + powerRange;
+        cout << "I squiggled " << powerRange << " amount!\n";
+
+    }
+
+    void read(string path = "worms.txt"){
+     string line;
+    ifstream readFile("worms.txt");
+    if(readFile.is_open()){
+        cout << "The file is open.\n";
+        while(getline(readFile, line)) {
+            cout << line << endl;
+        }
+    }
+    else{
+        cout << "Couldnt open the file";
+    }
+
+    readFile.close();
+}
 
     void attack(basicWurm& opponent){
         if(typing == SOIL && opponent.typing == CLAY){
@@ -123,8 +164,6 @@ basicWurm (string giveName, Type giveType, int giveEnergy) {
 
 int main(){
     srand(time(0));
-    string input; 
-    cout << "You have summoned the Grand Wurm.\n";
 
     // wormys gaining their dirt element and introducing themselves
     basicWurm grandwurm;
@@ -135,7 +174,17 @@ int main(){
     basicWurm rampage;
     rampage.name = "Drakon King";
     rampage.typing = basicWurm::Type::CLAY;
+    rampage.health = 500;
     rampage.speakElement();
+
+    do {
+    string input; 
+    cout << "What would you like to do?.\n";
+    cout << "Train\n";
+    cout << "Feed\n";
+    cout << "Battle\n";
+    cout << "Stats\n";
+    cout << "Quit\n";
 
     getline(cin, input);
     // Start of Attack
@@ -147,28 +196,76 @@ int main(){
         cout << "The Drakon King unleashes a breath attack!\n";
         rampage.attack(grandwurm);
         }
-    
 
     // Start of Feed
-    if (input == "feed") {
+    else if(input == "feed") {
         cout << "what would you like to feed your worm?\n";
+        cout << "Lemon\n";
+        cout << "Cherry\n";
 
-        if (input == "Lemon"){
+        cin >> input;
+
+        if (input == "lemon"){
             cout << "oouu sour!\n";
-
             grandwurm.eatLemon();
         }
+
+        else if (input == "cherry"){
+            cout << "oouu tart!\n";
+            grandwurm.eatCherry();
+        }
+
+        else {
+            break;
+
+            return 0;
+        }
+        
     }
 
     // Start of Train
-    if (input == "train") {
-        cout << "I am so ready :D\n";
+    else if (input == "train") {
+        cout << "What workout would you like to do?\n";
+        cout << "Squiggle\n";
+        cout << "Squirm\n";
+
+        cin >> input;
+
+        if (input == "squiggle"){
+            grandwurm.doSquiggle();
+        }
+
+
+        else if (input == "squirm"){
+            grandwurm.doSquirm();
+        }
     }
 
     // Start of Stats
-    if (input == "stats"){
+    else if (input == "stats"){
        grandwurm.speakStats();
     } 
 
-    return 0;
-}
+    // Start of Quit
+    else if (input == "quit"){
+        cout << "thanks for playin!";
+       break;
+    }
+
+    else if (input == "name"){
+        cout << "lets pick a new name!";
+
+        read();
+    }
+
+    else {
+        cout << "sorry I do not recoginze that?\n";
+    }
+
+
+    } while(true);
+
+         return 0;
+    } 
+
+   
