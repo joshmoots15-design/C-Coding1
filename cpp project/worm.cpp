@@ -31,7 +31,7 @@ public:
     Type typing;
     int energy;
     int power = rand();
-    int minPower = -3;
+    int minPower = 0;
     int maxPower = 3;
     int range = minPower - maxPower;
     int powerRange = (power % range) - maxPower;
@@ -86,39 +86,49 @@ basicWurm (string giveName, Type giveType, int giveEnergy) {
     }
 
     void speakStats(){
-        cout << "I am " << name << " and i have " << health << " health remaining, and I do ";
+        cout << "I am " << name << " and i have " << health << " health and " << energy;
+        cout << " energy remaining, and I do ";
         cout <<  damage << " "  << status() << " damage.\n";
     }
 
     void eatLemon(){
-        cout << "my damage is raised by x1.5!\n";
+        cout << "my damage and energy was raised by x1.5!\n";
         basicWurm::damage += damage * 1.5;
+        basicWurm::energy += energy * 1.5;
     }
 
     void eatCherry(){
-        cout << "my health is raised by x1.5!\n";
+        cout << "my health and energy was raised by x1.5!\n";
         basicWurm::health += health * 1.5;
+        basicWurm::energy += energy * 1.5;
+    }
+
+    void eatMango(){
+        cout << "my energy is raised x3!\n";
+        basicWurm::energy += energy * 3;
     }
 
     void doSquiggle(){
         cout << "I am squiggling!\n";
         basicWurm::damage += damage + powerRange;
+        basicWurm::energy -=  -powerRange;
         cout << "I squiggled " << powerRange << " amount!\n";
 
     }
 
     void doSquirm(){
         cout << "I am squirming!\n";
-        basicWurm::health += health + powerRange;
+        basicWurm::health += powerRange;
+        basicWurm::energy -= powerRange;
         cout << "I squiggled " << powerRange << " amount!\n";
 
     }
 
-    void read(string path = "worms.txt"){
+    void doRead(string path = "worms.txt"){
      string line;
     ifstream readFile("worms.txt");
     if(readFile.is_open()){
-        cout << "The file is open.\n";
+        cout << "The name file is open.\n";
         while(getline(readFile, line)) {
             cout << line << endl;
         }
@@ -129,6 +139,36 @@ basicWurm (string giveName, Type giveType, int giveEnergy) {
 
     readFile.close();
 }
+
+
+    void doWrite(vector<string>& vec, string path = "worms.txt"){
+    cout << "starting write() function.\n";
+    ofstream writerFile(path);
+    if(writerFile.is_open()){
+        cout << "opening the write file.\n";
+        for(int i = 0; i < vec.size(); i++){
+            writerFile << vec[i] << endl;
+        }
+    }
+
+    else {
+        cout << "couldnt open new writeFile.\n";
+    }
+
+}
+
+    void haveEnergy(){
+        cout << "I have " << energy << " energy remaining. ";
+        cout << "I am ";
+
+        if (energy < 0) cout << "unable";
+        else if (energy < 5) cout << "not ready";
+        else if (energy < 10) cout << "somewhat ready";
+        else if (energy < 15) cout << "ready";
+        else cout << "super ready";
+
+        cout << " to fight.\n";
+    }
 
     void attack(basicWurm& opponent){
         if(typing == SOIL && opponent.typing == CLAY){
@@ -156,6 +196,8 @@ basicWurm (string giveName, Type giveType, int giveEnergy) {
 
     cout << "i am doing " << damage << " multipied!\n";    
     cout << opponent.name << " now has " << opponent.health << " health remaining!\n";
+    
+    basicWurm::energy += -5;
 
         // if(opponent.health <= 0) return true;
         // else                     return false;
@@ -175,6 +217,7 @@ int main(){
     rampage.name = "Drakon King";
     rampage.typing = basicWurm::Type::CLAY;
     rampage.health = 500;
+    rampage.damage = (rand() % 15) + 1;
     rampage.speakElement();
 
     do {
@@ -185,6 +228,19 @@ int main(){
     cout << "Battle\n";
     cout << "Stats\n";
     cout << "Quit\n";
+
+    grandwurm.haveEnergy();
+
+    if (grandwurm.health <= 0 || grandwurm.energy <= 0){
+        cout << "the wurm has died :((\n";
+        cout << "thanks for playing!\n";
+
+        break;
+        } 
+
+        else{
+        cout << grandwurm.health << " health remaining and" << grandwurm.energy << " energy remaining!\n";
+        }
 
     getline(cin, input);
     // Start of Attack
@@ -202,6 +258,7 @@ int main(){
         cout << "what would you like to feed your worm?\n";
         cout << "Lemon\n";
         cout << "Cherry\n";
+        cout << "Mango\n";
 
         cin >> input;
 
@@ -213,6 +270,11 @@ int main(){
         else if (input == "cherry"){
             cout << "oouu tart!\n";
             grandwurm.eatCherry();
+        }
+
+        else if (input == "mango"){
+            cout << "oouu sweet!\n";
+            grandwurm.eatMango();
         }
 
         else {
@@ -253,9 +315,15 @@ int main(){
     }
 
     else if (input == "name"){
-        cout << "lets pick a new name!";
+        cout << "lets add new worms to the audience!";
 
-        read();
+        grandwurm.doRead();
+
+        while(input != "") {
+        cout << "> ";
+        getline(cin, input);
+        if(input == "");
+    }
     }
 
     else {
