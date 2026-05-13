@@ -249,6 +249,7 @@ int main(){
     cout << "Quit\n";
 
     grandwurm.haveEnergy();
+    grandwurm.isHungry();
 
     if (grandwurm.health <= 0 || grandwurm.energy <= 0 || grandwurm.energy >= 50){
         cout << "the wurm has died :((\n";
@@ -290,7 +291,6 @@ int main(){
                 cout << "what would you like to feed your worm?\n";
                     cout << "Lemon\n";
                     cout << "Cherry\n";
-                    cout << "Mango\n";
 
                     cin >> input;
 
@@ -302,16 +302,14 @@ int main(){
                         cout << "oouu tart!\n";
                         grandwurm.eatCherry();
                     }
-                    else if (input == "mango"){
-                        cout << "oouu sweet!\n";
-                        grandwurm.eatMango();
-                    }
+                  
                     else {
                         break;
                     }
                     }
             
                 else if(input == "run"){
+                    cout << "you ran away from battle!\n";
                     break;
                 }
 
