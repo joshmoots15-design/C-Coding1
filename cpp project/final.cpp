@@ -28,7 +28,7 @@ public:
     // int name;
     int health;
     int damage; 
-    Type typing;
+    Type typing = Type(rand()%4);
     int energy;
     int power = rand();
     int minPower = 1;
@@ -229,14 +229,14 @@ int main(){
     // wormys gaining their dirt element and introducing themselves
     basicWurm grandwurm;
     grandwurm.name = "Grand Wurm";
-    grandwurm.typing = basicWurm::Type::SOIL;
+    grandwurm.typing = basicWurm::Type(rand()%4);
     grandwurm.speakElement();
 
     basicWurm rampage;
     rampage.name = "Drakon King";
-    rampage.typing = basicWurm::Type::CLAY;
-    rampage.health = 500;
-    rampage.damage = (rand() % 15) + 1;
+    rampage.typing = basicWurm::Type(rand()%4);
+    rampage.health = 30;
+    rampage.damage = (rand() % 8) + 1;
     rampage.speakElement();
 
     do {
@@ -246,10 +246,11 @@ int main(){
     cout << "Feed\n";
     cout << "Battle\n";
     cout << "Stats\n";
+    cout << "Types\n";
+    cout << "Adapt\n";
     cout << "Quit\n";
 
     grandwurm.haveEnergy();
-    grandwurm.isHungry();
 
     if (grandwurm.health <= 0 || grandwurm.energy <= 0 || grandwurm.energy >= 50){
         cout << "the wurm has died :((\n";
@@ -261,6 +262,18 @@ int main(){
         else{
         cout << grandwurm.health << " health remaining and " << grandwurm.energy << " energy remaining!\n";
         }
+    
+    if (rampage.health <= 0){
+        cout << "you have defeated the evil Drakon King!\n";
+        cout << "you win! thanks for playing!\n";
+
+        break;
+    }
+
+    else{
+        cout << "the Drakon King still lives.\n";
+    }
+
 
     getline(cin, input);
     // Start of Attack
@@ -268,23 +281,23 @@ int main(){
     if(input == "battle"){
         
             if(grandwurm.energy >= 5 || grandwurm.health >= 0){
-                cout << "Would you like to fight, eat, or run away?\n";
+                cout << "Would you like to fight, eat, check the enemy, or run away?\n";
 
                 cin >> input;
 
-                if(input == "fight"){
-                cout << "The Grand Wurm readies its spell\n";
-                grandwurm.attack(rampage);
-
-                grandwurm.doRead();
-                grandwurm.doRead(worms); 
-
-                cout << "The Drakon King unleashes a breath attack!\n";
-                rampage.attack(grandwurm);
+                if(input == "fight" && grandwurm.energy <= 5){
+                    cout << "I am too tired to fight, I need to be fed.\n";
                 }
 
-                else if(input == "fight" && grandwurm.energy <= 5){
-                        cout << "I am too tired to fight, I need to be feed.";
+                else if(input == "fight"){
+                    cout << "The Grand Wurm readies its spell\n";
+                        grandwurm.attack(rampage);
+
+                        grandwurm.doRead();
+                        grandwurm.doRead(worms); 
+
+                        cout << "The Drakon King unleashes a breath attack!\n";
+                        rampage.attack(grandwurm);
                 }
 
                 else if(input == "eat"){
@@ -382,27 +395,65 @@ int main(){
        break;
     }
 
-    else if (input == "name"){
-        cout << "lets add new worms to the audience!";
+    // else if (input == "name"){
+    //     cout << "lets add new worms to the audience!";
     //     cout << "What file would you like to open?\nEnter to do the defeult.\n";
     //     getline(cin, input);
     //     if(input != "no") {
     //     path = input;
     //     }
 
-        grandwurm.doRead();
-        grandwurm.doRead(worms);
+    //     grandwurm.doRead();
+    //     grandwurm.doRead(worms);
 
-        while(input != "") {
-        cout << "> ";
-        getline(cin, input);
-        if(input == "");
+    //     while(input != "") {
+    //     cout << "> ";
+    //     getline(cin, input);
+    //     if(input == "");
+    // }
+
+    // worms.push_back(input);
+
+    // grandwurm.write(worms, path);
+
+    // }
+
+    // Start of Types
+    else if(input == "types"){
+        cout << "Soil is strong against Clay\n";
+        cout << "Clay is strong against Dust\n";
+        cout << "Dust is strong against Stone\n";
+        cout << "Stone is strong against Soil\n";
     }
 
-    worms.push_back(input);
+    else if(input == "adapt"){
+        cout << "what would you like to change your type to?\n";
+        cout << "Soil\n";
+        cout << "Clay\n";
+        cout << "Dust\n";
+        cout << "Stone\n";
+        cout << "Random\n";
 
-    grandwurm.write(worms, path);
+        cin >> input;
 
+        if(input == "soil"){
+            grandwurm.typing = basicWurm::Type::SOIL;
+        }
+        else if(input == "clay"){
+            grandwurm.typing = basicWurm::Type::CLAY;
+        }
+        else if(input == "dust"){
+            grandwurm.typing = basicWurm::Type::DUST;
+        }
+        else if(input == "stone"){
+            grandwurm.typing = basicWurm::Type::STONE;
+        }
+        else if(input == "random"){
+            grandwurm.typing = basicWurm::Type(rand()%4);
+        }
+        else {
+            cout << "I do not understand";
+        }
     }
 
     else {
